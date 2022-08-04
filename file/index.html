@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container"></div>
+    <div class="form">
+        <form method="post">
+            <input name="name" class="name">
+            <input name="email" class="email">
+
+
+            <button onclick="post()">Submit</button>
+        </form>
+    </div>
+    <script>
+        var container=document.querySelector('.container')
+        const getData=async()=>{
+            const data=await fetch('http://localhost:5000/')
+            const res= await data.json()
+           const inn= res.map((item)=>{
+             return `<h1>${item.name}</h1>
+             <h2>${item.email}</h2>
+             
+             `
+            }).join('')
+            console.log(inn)
+            container.innerHTML=inn
+          
+        }
+      getData()
+       const post=async(e)=>{
+        e.preventDefault()
+
+        var name=document.querySelector('.name').value
+        var email=document.querySelector('.email').value
+         console.log(name)
+           const data=await fetch('http://localhost:5000/page',{
+            method:'post',
+            body:{name:name,email:email}
+           })
+            const res= await data.json()
+           const inn= res.map((item)=>{
+             return `<h1>${item.name}</h1>
+             <h2>${item.email}</h2> 
+             `
+            }).join('')
+        
+            container.innerHTML=inn
+            
+       }
+     
+    </script>
+</body>
+</html>
